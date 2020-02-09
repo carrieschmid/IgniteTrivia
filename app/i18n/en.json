@@ -4,6 +4,9 @@
     "cancel": "Cancel",
     "back": "Back"
   },
+  "questionScreen": {
+    "header": "Questions"
+  },
   "errors": {
     "invalidEmail": "Invalid email address."
   },
