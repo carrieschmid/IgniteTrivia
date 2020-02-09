@@ -1,4 +1,5 @@
-import { API_URL } from "react-native-dotenv"
+import * as env from "../../utils/environment-variables"
+// import { API_URL } from "react-native-dotenv"
 
 /**
  * The options used to configure the API.
@@ -19,6 +20,6 @@ export interface ApiConfig {
  * The default configuration for the app.
  */
 export const DEFAULT_API_CONFIG: ApiConfig = {
-  url: API_URL || "https://jsonplaceholder.typicode.com",
+  url: env.API || "https://opentdb.com/api.php?amount=12",
   timeout: 10000,
 }
