@@ -1,11 +1,13 @@
 import * as React from "react"
 import { observer, inject } from "mobx-react"
-import { ViewStyle, View, FlatList, TextStyle } from "react-native"
+import { ViewStyle, View, FlatList, TextStyle, Alert, TouchableOpacity } from "react-native"
+import { RadioButtons } from "react-native-radio-buttons"
 import { Text } from "../../components/text/text"
 import { Screen } from "../../components/screen/screen"
 import { color, spacing } from "../../theme"
 import { NavigationScreenProp } from "react-navigation"
 import { QuestionStore } from "../../models/question-store"
+import { Button } from "../../components/button"
 import { Question } from "../../models/question"
 
 export interface QuestionScreenProps extends NavigationScreenProp<{}> {

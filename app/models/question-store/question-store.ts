@@ -11,6 +11,7 @@ export const QuestionStoreModel = types
   .props({
     questions: types.optional(types.array(QuestionModel), []),
   })
+  .extend(withEnvironment)
   .views(self => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions(self => ({
     saveQuestions: (questionSnapshots: QuestionSnapshot[]) => {

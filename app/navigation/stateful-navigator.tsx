@@ -1,25 +1,37 @@
 import * as React from "react"
-import { observer } from "mobx-react-lite"
+import { inject, observer } from "mobx-react"
 // @ts-ignore: until they update @type/react-navigation
 import { getNavigation, NavigationScreenProp, NavigationState } from "react-navigation"
-import { useStores } from "../models/root-store"
 import { RootNavigator } from "./root-navigator"
+import { NavigationStore } from "./navigation-store"
 
-let currentNavigation: NavigationScreenProp<NavigationState> | undefined
+interface StatefulNavigatorProps {
+  navigationStore?: NavigationStore
+}
 
-export const StatefulNavigator: React.FunctionComponent<{}> = observer(() => {
-  const {
-    navigationStore: { state, dispatch, actionSubscribers },
-  } = useStores()
+@inject("navigationStore")
+@observer
+export class StatefulNavigator extends React.Component<StatefulNavigatorProps, {}> {
+  currentNavProp: NavigationScreenProp<NavigationState>
 
-  currentNavigation = getNavigation(
-    RootNavigator.router,
-    state,
-    dispatch,
-    actionSubscribers(),
-    {},
-    () => currentNavigation,
-  )
+  getCurrentNavigation = () => {
+    return this.currentNavProp
+  }
 
-  return <RootNavigator navigation={currentNavigation} />
-})
+  render() {
+    // grab our state & dispatch from our navigation store
+    const { state, dispatch, actionSubscribers } = this.props.navigationStore
+
+    // create a custom navigation implementation
+    this.currentNavProp = getNavigation(
+      RootNavigator.router,
+      state,
+      dispatch,
+      actionSubscribers(),
+      {},
+      this.getCurrentNavigation,
+    )
+
+    return <RootNavigator navigation={this.currentNavProp} />
+  }
+}
